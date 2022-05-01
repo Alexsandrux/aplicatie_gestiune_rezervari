@@ -22,38 +22,38 @@ class GridCamere extends StatefulWidget {
 class _GridCamereState extends State<GridCamere> {
   List<Camera> get getCamereVerificate {
     return camere.where((camera) {
-      return !rezervari.any((rezervare) {
-        // if ((rezervare.dataSosire.isAfter(widget.dataSosire) ||
-        //         rezervare.dataSosire.isAtSameMomentAs(widget.dataSosire)) &&
-        //     (rezervare.dataPlecare.isBefore(widget.dataPlecare) ||
-        //         rezervare.dataPlecare.isAtSameMomentAs(widget.dataPlecare))) {
-        //   return rezervare.idCamera == camera.idCamera;
-        // } else {
-        //   return false;
-        // }
+      if (rezervari.isEmpty) {
+        return true;
+      } else {
+        for (var rezervare in rezervari) {
+          if (rezervare.idCamera.compareTo(camera.idCamera) == 0) {
+            print("DATA SOSIRE " +
+                widget.dataSosire.toString() +
+                " / " +
+                rezervare.dataSosire.toString());
 
-        if (widget.dataSosire.isAfter(rezervare.dataSosire)) {
-          print(camera.idCamera +
-              " este dupa data stabilita " +
-              rezervare.dataSosire.toString() +
-              " / " +
-              widget.dataSosire.toString());
-          return rezervare.idCamera == camera.idCamera;
-        } else if (widget.dataSosire.isAtSameMomentAs(rezervare.dataSosire)) {
-          print(camera.idCamera +
-              " este in acelasi moment ca stabilita " +
-              rezervare.dataSosire.toString() +
-              " / " +
-              widget.dataSosire.toString());
-          return rezervare.idCamera == camera.idCamera;
+            print("DATA PLECARE " +
+                widget.dataPlecare.toString() +
+                " / " +
+                rezervare.dataPlecare.toString());
+            if (widget.dataSosire.isAfter(rezervare.dataSosire) ||
+                rezervare.dataSosire.isAtSameMomentAs(widget.dataSosire)) {
+              print("ESTE!");
+              if (widget.dataPlecare.isBefore(rezervare.dataPlecare) ||
+                  rezervare.dataPlecare.isAtSameMomentAs(widget.dataPlecare)) {
+                print("ESTE2222223!");
+                return false;
+              }
+            }
+
+            if (widget.dataSosire.isBefore(rezervare.dataPlecare)) {
+              print("ESTE2222223!");
+              return false;
+            }
+          }
         }
-        print(camera.idCamera +
-            " niciuna " +
-            rezervare.dataSosire.toString() +
-            " / " +
-            widget.dataSosire.toString());
-        return false;
-      });
+        return true;
+      }
     }).toList(); // provider de rezervari si camere neaparat!!!!
   }
 
