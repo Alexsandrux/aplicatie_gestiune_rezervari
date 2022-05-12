@@ -12,6 +12,7 @@ class RoadsAndLocation extends StatelessWidget {
       drawer: const MainDrawer(),
       body: const Center(child: Text("Stare drumuri și locație")),
       appBar: AppBar(
+        title: const Text("Stare drumuri și locație"),
         backgroundColor: Theme.of(context).primaryColor,
       ),
     );

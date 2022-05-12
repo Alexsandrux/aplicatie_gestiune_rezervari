@@ -6,6 +6,9 @@ import 'screens/news_screen.dart';
 import 'screens/camere_screen.dart';
 import 'screens/roads_and_location.dart';
 import 'screens/camera_screen.dart';
+import 'screens/my_reservations_screen.dart';
+
+import './providers/rezervari_provider.dart';
 
 import 'package:flutter/services.dart';
 
@@ -35,7 +38,8 @@ class MyApp extends StatelessWidget {
         NewsScreen.routeName: (ctx) => const NewsScreen(),
         RoadsAndLocation.routeName: (ctx) => const RoadsAndLocation(),
         SettingsScreen.routeName: (ctx) => const SettingsScreen(),
-        CameraScreen.routeName: (ctx) => const CameraScreen()
+        CameraScreen.routeName: (ctx) => const CameraScreen(),
+        MyReservationsScreen.routeName: (ctx) => const MyReservationsScreen(),
       },
     );
   }

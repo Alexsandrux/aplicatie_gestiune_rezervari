@@ -5,6 +5,7 @@ import '../../screens/settings_screen.dart';
 import '../../screens/news_screen.dart';
 import '../../screens/camere_screen.dart';
 import '../../screens/roads_and_location.dart';
+import '../../screens/my_reservations_screen.dart';
 
 class MainDrawer extends StatefulWidget {
   const MainDrawer({Key? key}) : super(key: key);
@@ -32,7 +33,12 @@ class _MainDrawerState extends State<MainDrawer> {
             screenRoute: CamereScreen.routeName,
           ),
           const DrawerButtonTile(
-            titlu: "Știri",
+            titlu: "Rezervările mele",
+            icon: Icon(Icons.person),
+            screenRoute: MyReservationsScreen.routeName,
+          ),
+          const DrawerButtonTile(
+            titlu: "Noutăți",
             icon: Icon(Icons.newspaper),
             screenRoute: NewsScreen.routeName,
           ),

@@ -8,4 +8,10 @@ class RezervariProvider with ChangeNotifier {
   List<Rezervare> get getItems {
     return [..._items];
   }
+
+  void addItem(Rezervare rezervare) {
+    _items.add(rezervare);
+
+    notifyListeners();
+  }
 }

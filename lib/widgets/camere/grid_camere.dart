@@ -6,10 +6,12 @@ import '../../models/camera.dart';
 import './camera_grid_tile.dart';
 
 class GridCamere extends StatefulWidget {
-  DateTime dataSosire;
-  DateTime dataPlecare;
+  final DateTime dataSosire;
+  final DateTime dataPlecare;
+  final Function reincarcaPagina;
 
-  GridCamere({
+  const GridCamere({
+    required this.reincarcaPagina,
     required this.dataSosire,
     required this.dataPlecare,
     Key? key,
@@ -27,27 +29,36 @@ class _GridCamereState extends State<GridCamere> {
       } else {
         for (var rezervare in rezervari) {
           if (rezervare.idCamera.compareTo(camera.idCamera) == 0) {
-            print("DATA SOSIRE " +
-                widget.dataSosire.toString() +
-                " / " +
-                rezervare.dataSosire.toString());
+            if (widget.dataSosire.isAfter(rezervare.dataPlecare)) {
+              continue;
+            }
 
-            print("DATA PLECARE " +
-                widget.dataPlecare.toString() +
-                " / " +
-                rezervare.dataPlecare.toString());
+            if (widget.dataPlecare.isBefore(rezervare.dataSosire)) {
+              continue;
+            }
+
             if (widget.dataSosire.isAfter(rezervare.dataSosire) ||
                 rezervare.dataSosire.isAtSameMomentAs(widget.dataSosire)) {
-              print("ESTE!");
               if (widget.dataPlecare.isBefore(rezervare.dataPlecare) ||
                   rezervare.dataPlecare.isAtSameMomentAs(widget.dataPlecare)) {
-                print("ESTE2222223!");
                 return false;
               }
             }
 
-            if (widget.dataSosire.isBefore(rezervare.dataPlecare)) {
-              print("ESTE2222223!");
+            if ((widget.dataSosire.isAfter(rezervare.dataSosire) ||
+                    rezervare.dataSosire.isAtSameMomentAs(widget.dataSosire)) &&
+                widget.dataPlecare.isAfter(rezervare.dataPlecare)) {
+              return false;
+            }
+
+            if (widget.dataSosire.isBefore(rezervare.dataSosire) &&
+                    widget.dataPlecare.isBefore(rezervare.dataPlecare) ||
+                rezervare.dataPlecare.isAtSameMomentAs(widget.dataPlecare)) {
+              return false;
+            }
+
+            if (widget.dataSosire.isBefore(rezervare.dataSosire) &&
+                widget.dataPlecare.isAfter(rezervare.dataPlecare)) {
               return false;
             }
           }
@@ -75,6 +86,7 @@ class _GridCamereState extends State<GridCamere> {
             itemCount: camereVerificate.length,
             itemBuilder: (BuildContext ctx, index) {
               return CameraGridTile(
+                reincarcaPagina: widget.reincarcaPagina,
                 dataSosire: widget.dataSosire,
                 dataPlecare: widget.dataPlecare,
                 camera: camereVerificate[index],

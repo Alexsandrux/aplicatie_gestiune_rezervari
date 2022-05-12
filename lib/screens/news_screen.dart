@@ -14,6 +14,7 @@ class NewsScreen extends StatelessWidget {
         child: Text("Test"),
       ),
       appBar: AppBar(
+        title: const Text("Noutăți"),
         backgroundColor: Theme.of(context).primaryColor,
       ),
     );

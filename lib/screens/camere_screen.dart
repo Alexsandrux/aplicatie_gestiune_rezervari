@@ -20,7 +20,13 @@ class _CamereScreenState extends State<CamereScreen> {
 
   DateTime? dataPlecare;
 
-  bool reincarcaPagina = false;
+  bool shouldRedraw = false;
+
+  void reincarcaPagina() {
+    setState(() {
+      shouldRedraw = !shouldRedraw;
+    });
+  }
 
 // todo: HELP
 
@@ -65,6 +71,7 @@ class _CamereScreenState extends State<CamereScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text("Rezervă camera"),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       drawer: const MainDrawer(),
@@ -92,6 +99,7 @@ class _CamereScreenState extends State<CamereScreen> {
               height: (MediaQuery.of(context).size.height) * 0.35,
               child: (dataSosire != null && dataPlecare != null)
                   ? GridCamere(
+                      reincarcaPagina: reincarcaPagina,
                       dataSosire: dataSosire!,
                       dataPlecare: dataPlecare!,
                     )
