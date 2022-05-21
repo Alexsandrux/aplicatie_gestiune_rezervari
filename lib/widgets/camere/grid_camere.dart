@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../../DUMMY_DATA.dart';
-
+import '../../models/rezervare.dart';
 import '../../models/camera.dart';
 import './camera_grid_tile.dart';
+
+import '../../providers/rezervari_provider.dart';
+import '../../providers/camere_provider.dart';
 
 class GridCamere extends StatefulWidget {
   final DateTime dataSosire;
   final DateTime dataPlecare;
-  final Function reincarcaPagina;
 
   const GridCamere({
-    required this.reincarcaPagina,
     required this.dataSosire,
     required this.dataPlecare,
     Key? key,
@@ -22,6 +23,9 @@ class GridCamere extends StatefulWidget {
 }
 
 class _GridCamereState extends State<GridCamere> {
+  late List<Rezervare> rezervari;
+  late List<Camera> camere;
+
   List<Camera> get getCamereVerificate {
     return camere.where((camera) {
       if (rezervari.isEmpty) {
@@ -65,13 +69,18 @@ class _GridCamereState extends State<GridCamere> {
         }
         return true;
       }
-    }).toList(); // provider de rezervari si camere neaparat!!!!
+    }).toList();
   }
 
   late List<Camera> camereVerificate;
 
   @override
   Widget build(BuildContext context) {
+    final rezervariData = Provider.of<RezervariProvider>(context);
+    rezervari = rezervariData.getItems;
+    final camereData = Provider.of<CamereProvider>(context);
+    camere = camereData.getItems;
+
     camereVerificate = getCamereVerificate;
 
     return camereVerificate.isNotEmpty
@@ -86,7 +95,6 @@ class _GridCamereState extends State<GridCamere> {
             itemCount: camereVerificate.length,
             itemBuilder: (BuildContext ctx, index) {
               return CameraGridTile(
-                reincarcaPagina: widget.reincarcaPagina,
                 dataSosire: widget.dataSosire,
                 dataPlecare: widget.dataPlecare,
                 camera: camereVerificate[index],

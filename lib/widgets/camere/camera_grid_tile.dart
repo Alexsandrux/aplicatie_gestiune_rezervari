@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../models/camera.dart';
+
+import '../../screens/my_reservations_screen.dart';
 import '../../screens/camera_screen.dart';
 
 class CameraGridTile extends StatefulWidget {
@@ -9,10 +11,7 @@ class CameraGridTile extends StatefulWidget {
   final DateTime? dataSosire;
   final DateTime? dataPlecare;
 
-  final Function reincarcaPagina;
-
   const CameraGridTile({
-    required this.reincarcaPagina,
     required this.dataSosire,
     required this.dataPlecare,
     required this.camera,
@@ -32,7 +31,22 @@ class _CameraGridTileState extends State<CameraGridTile> {
           widget.camera,
           widget.dataSosire,
           widget.dataPlecare
-        ]).then((value) => widget.reincarcaPagina());
+        ]).then((value) => {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text("Rezervarea a fost înregistrată!"),
+                  duration: const Duration(seconds: 4),
+                  action: SnackBarAction(
+                    label: "AFISARE",
+                    onPressed: () {
+                      // TODO: sa fie trimis a rezervare detail, hint: ne folosim de pop sa trimitem id-ul
+                      Navigator.of(context)
+                          .pushNamed(MyReservationsScreen.routeName);
+                    },
+                  ),
+                ),
+              )
+            });
       },
       splashColor: Theme.of(context).highlightColor,
       borderRadius: BorderRadius.circular(10),

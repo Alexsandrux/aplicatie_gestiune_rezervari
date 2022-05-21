@@ -4,7 +4,9 @@ import './camera_information_tile.dart';
 import '../../models/camera.dart';
 import '../../models/rezervare.dart';
 
-import '../../DUMMY_DATA.dart';
+import '../../providers/rezervari_provider.dart';
+
+import 'package:provider/provider.dart';
 
 class CameraDetail extends StatelessWidget {
   final Camera camera;
@@ -13,15 +15,16 @@ class CameraDetail extends StatelessWidget {
   final DateTime dataPlecare;
 
   void addRezervare(BuildContext context) {
-    rezervari.add(
-      Rezervare(
-        idRezervare: "R" + rezervari.length.toString(),
-        idCamera: camera.idCamera,
-        dataSosire: dataSosire,
-        dataPlecare: dataPlecare,
-        dataInregistrareRezervare: DateTime.now(),
-      ),
+    final rezervariData =
+        Provider.of<RezervariProvider>(context, listen: false);
+    final rezervareNoua = Rezervare(
+      idRezervare: "R${rezervariData.getItems.length}",
+      idCamera: camera.idCamera,
+      dataSosire: dataSosire,
+      dataPlecare: dataPlecare,
+      dataInregistrareRezervare: DateTime.now(),
     );
+    rezervariData.addItem(rezervareNoua);
     Navigator.of(context).pop();
   }
 
@@ -70,8 +73,25 @@ class CameraDetail extends StatelessWidget {
             ),
             Center(
               child: ElevatedButton(
-                child: const Text("Rezervare"),
+                child: const Text("Rezervă"),
                 onPressed: () {
+                  //TODO: de finalizat alertDialog
+                  /*showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      title: const Text("Doriți să finalizați rezervarea?"),
+                      content: Column(
+                        children: const [
+                          Text(
+                              "Sunteți sigur ca vreți să sa rezervați camera?"),
+                          Text(
+                              "Vor exista cheltuieli ulterioare legate de plata avansului!"),
+                        ],
+                      ),
+                    ), // de verificat daca este sigur ca utilizatorul este sigur ca vrea sa faca rezervare si sa fie atentionat in legatura cu plata ulterioara a avansului
+                  ).then(
+                    ((value) => addRezervare(context)),
+                  ); */
                   addRezervare(context);
                 },
                 style: ButtonStyle(

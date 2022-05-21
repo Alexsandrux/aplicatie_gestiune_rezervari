@@ -20,18 +20,8 @@ class _CamereScreenState extends State<CamereScreen> {
 
   DateTime? dataPlecare;
 
-  bool shouldRedraw = false;
-
-  void reincarcaPagina() {
-    setState(() {
-      shouldRedraw = !shouldRedraw;
-    });
-  }
-
-// todo: HELP
-
   void _dataSosirePicker() {
-    // de adaugat validare la date !!!!!!!!!!!!!!
+    // TODO: de adaugat validare la date !!!!!!!!!!!!!!
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -99,7 +89,6 @@ class _CamereScreenState extends State<CamereScreen> {
               height: (MediaQuery.of(context).size.height) * 0.35,
               child: (dataSosire != null && dataPlecare != null)
                   ? GridCamere(
-                      reincarcaPagina: reincarcaPagina,
                       dataSosire: dataSosire!,
                       dataPlecare: dataPlecare!,
                     )

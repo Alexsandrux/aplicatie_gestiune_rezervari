@@ -2,13 +2,20 @@ import 'package:flutter/material.dart';
 
 import './rezervare_list_tile.dart';
 
-import '../../DUMMY_DATA.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/rezervari_provider.dart';
+
+import '../../models/rezervare.dart';
 
 class RezervariList extends StatelessWidget {
   const RezervariList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final rezervariData = Provider.of<RezervariProvider>(context);
+    List<Rezervare> rezervari = rezervariData.getItems;
+
     return rezervari.isEmpty
         ? const Text("Nu a fost găsită nicio înregistrare")
         : ListView.builder(

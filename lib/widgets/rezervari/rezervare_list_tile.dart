@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -11,7 +9,7 @@ class RezervareListTile extends StatelessWidget {
   const RezervareListTile({required this.rezervare, Key? key})
       : super(key: key);
 
-  Widget RowColumnBuilder(String superiorText, String inferiorText) {
+  Widget rowColumnBuilder(String superiorText, String inferiorText) {
     return Column(
       children: [
         Text(superiorText),
@@ -46,22 +44,22 @@ class RezervareListTile extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              RowColumnBuilder(
+              rowColumnBuilder(
                 "Data sosire rezervare: ",
                 DateFormat.yMd().format(rezervare.dataSosire).toString(),
               ),
-              RowColumnBuilder(
+              rowColumnBuilder(
                 "Data plecare rezervare: ",
                 DateFormat.yMd().format(rezervare.dataPlecare).toString(),
               ),
-              RowColumnBuilder("Pret: ",
+              rowColumnBuilder("Pret: ",
                   "200"), // de calculat pretul cand facem request-ul catre camera cand am legatura cu baza de date
             ],
           ),
           const SizedBox(
             height: 10,
           ),
-          RowColumnBuilder("Camera:", rezervare.idCamera)
+          rowColumnBuilder("Camera:", rezervare.idCamera)
         ],
       ),
     );
