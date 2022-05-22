@@ -1,6 +1,6 @@
 class Camera {
   final String idCamera;
-  final int numarCamera;
+  final String numarCamera;
   final int numarLocuriCamera;
   final double pret;
   final String descriere;

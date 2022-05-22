@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "876017908079",
+    "project_id": "licenta-rezervare-pensiune",
+    "storage_bucket": "licenta-rezervare-pensiune.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876017908079:android:1e9e623ca0092bef1f909a",
+        "android_client_info": {
+          "package_name": "com.example.aplicatie_gestiune_rezervari"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "876017908079-8eeimhm6c3gktagmj96nu3fl07rrv01c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAT2-ParXxR2V-4iKxEPJ3cpQOh-HVXzXo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "876017908079-8eeimhm6c3gktagmj96nu3fl07rrv01c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

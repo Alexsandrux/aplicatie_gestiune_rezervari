@@ -59,7 +59,10 @@ class RezervareListTile extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          rowColumnBuilder("Camera:", rezervare.idCamera)
+          rowColumnBuilder(
+              "Camera:",
+              rezervare
+                  .idCamera) // TODO: de facut get la o camera anume de la provider
         ],
       ),
     );

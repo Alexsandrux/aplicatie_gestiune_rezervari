@@ -39,9 +39,9 @@ class _CameraGridTileState extends State<CameraGridTile> {
                   action: SnackBarAction(
                     label: "AFISARE",
                     onPressed: () {
-                      // TODO: sa fie trimis a rezervare detail, hint: ne folosim de pop sa trimitem id-ul
+                      // TODO: sa fie trimis la rezervare detail, hint: ne folosim de pop sa trimitem id-ul
                       Navigator.of(context)
-                          .pushNamed(MyReservationsScreen.routeName);
+                          .pushReplacementNamed(MyReservationsScreen.routeName);
                     },
                   ),
                 ),
