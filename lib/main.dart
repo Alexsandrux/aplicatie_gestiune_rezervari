@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'screens/homepage_screen.dart';
 import 'screens/settings_screen.dart';
@@ -12,17 +13,17 @@ import 'screens/camera_screen.dart';
 import 'screens/my_reservations_screen.dart';
 // ignore: unused_import
 import 'screens/admin_panel_screen.dart';
-import 'screens/logare_screen.dart';
+import 'screens/auth_screen.dart';
 
 import './providers/rezervari_provider.dart';
 import './providers/camere_provider.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-  Firebase.initializeApp();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -49,15 +50,23 @@ class MyApp extends StatelessWidget {
             highlightColor: Colors.purple[600]),
         title: "Aplicatie Rezervari Pensiune",
         // ignore: dead_code
-        home: const HomepageScreen(),
+        home: StreamBuilder<User?>(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, AsyncSnapshot<User?> snapshot) {
+              if (snapshot.hasData) {
+                return const HomepageScreen();
+              }
+              return const AuthScreen(); // TODO: dupa inregistrare nu se schimba imaginea
+            }),
         routes: {
+          "/home": (ctx) => const HomepageScreen(),
           CamereScreen.routeName: (ctx) => const CamereScreen(),
           NewsScreen.routeName: (ctx) => const NewsScreen(),
           RoadsAndLocation.routeName: (ctx) => const RoadsAndLocation(),
           SettingsScreen.routeName: (ctx) => const SettingsScreen(),
           CameraScreen.routeName: (ctx) => const CameraScreen(),
           MyReservationsScreen.routeName: (ctx) => const MyReservationsScreen(),
-          LogareScreen.routeName: (ctx) => const LogareScreen(),
+          AuthScreen.routeName: (ctx) => const AuthScreen(),
         },
       ),
     );
