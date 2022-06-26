@@ -1,3 +1,4 @@
+import 'package:aplicatie_gestiune_rezervari/models/autentificare/sign_out_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/drawer/main_drawer.dart';
@@ -11,27 +12,33 @@ class SettingsScreen extends StatelessWidget {
 
   const SettingsScreen({Key? key}) : super(key: key);
 
-  void delogare(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       drawer: const MainDrawer(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            const Text("Setări"),
-            ElevatedButton(
-              onPressed: () {
-                delogare(context);
-              },
-              child: const Text("Delogare"),
-            )
-          ],
-        ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          const Spacer(
+            flex: 2,
+          ),
+          ElevatedButton(
+            style: ButtonStyle(
+              fixedSize: MaterialStateProperty.all<Size>(
+                  const Size.fromHeight(double.infinity)),
+              backgroundColor: MaterialStateProperty.all<Color>(Colors.purple),
+            ),
+            onPressed: () {
+              SignOutManager().delogare(context);
+            },
+            child: const Text("Delogare"),
+          ),
+          const Spacer(
+            flex: 2,
+          )
+        ],
       ),
       appBar: AppBar(
         title: const Text("Setări"),

@@ -10,6 +10,10 @@ class CamereProvider with ChangeNotifier {
     return [..._items];
   }
 
+  Camera getCamera(String id) {
+    return _items.firstWhere((element) => element.idCamera == id);
+  }
+
   Future<void> fetchCamere() async {
     _items.clear();
     await FirebaseFirestore.instance.collection('camere').get().then((data) {

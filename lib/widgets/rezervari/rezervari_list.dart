@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../providers/rezervari_user_provider.dart';
 import './rezervare_list_tile.dart';
 
 import 'package:provider/provider.dart';
-
-import '../../providers/rezervari_provider.dart';
 
 import '../../models/rezervare.dart';
 
@@ -13,7 +12,8 @@ class RezervariList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final rezervariData = Provider.of<RezervariProvider>(context);
+    final rezervariData = Provider.of<RezervariUserProvider>(context);
+
     List<Rezervare> rezervari = rezervariData.getItems;
 
     return rezervari.isEmpty

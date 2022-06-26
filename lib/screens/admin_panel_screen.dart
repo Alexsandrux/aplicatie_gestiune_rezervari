@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../models/autentificare/sign_out_manager.dart';
+
 class AdminPanelScreen extends StatelessWidget {
   const AdminPanelScreen({Key? key}) : super(key: key);
+
+  static const String routeName = "/adminPanel";
 
   @override
   Widget build(BuildContext context) {
@@ -16,17 +20,24 @@ class AdminPanelScreen extends StatelessWidget {
           child: Column(
             children: [
               const Center(
-                child: Text("hello admmin ! "),
+                child: Text("Hello, Admin !"),
               ),
-              Row(
-                children: const [
-                  ElevatedButton(
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const ElevatedButton(
                     onPressed: null,
                     child: Text("Adaugă o știre"),
                   ),
-                  ElevatedButton(
+                  const ElevatedButton(
                     onPressed: null,
                     child: Text("Vezi rezervările"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      SignOutManager().delogare(context);
+                    },
+                    child: const Text("Delogare"),
                   )
                 ],
               )

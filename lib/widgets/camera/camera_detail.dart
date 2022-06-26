@@ -1,4 +1,9 @@
+import 'package:aplicatie_gestiune_rezervari/models/stare_rezervare/convertor_stare_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../../providers/rezervari_user_provider.dart';
 import './camera_information_tile.dart';
 
 import '../../models/camera.dart';
@@ -14,18 +19,42 @@ class CameraDetail extends StatelessWidget {
   final DateTime dataSosire;
   final DateTime dataPlecare;
 
-  void addRezervare(BuildContext context) {
+  void addRezervare(BuildContext context) async {
+    if (FirebaseAuth.instance.currentUser == null) {
+      Navigator.of(context).pop();
+    }
     final rezervariData =
         Provider.of<RezervariProvider>(context, listen: false);
+    final rezervariUserData =
+        Provider.of<RezervariUserProvider>(context, listen: false);
     final rezervareNoua = Rezervare(
-      idRezervare: "R${rezervariData.getItems.length}",
       idCamera: camera.idCamera,
       dataSosire: dataSosire,
       dataPlecare: dataPlecare,
       dataInregistrareRezervare: DateTime.now(),
+      idUtilizator: FirebaseAuth.instance.currentUser!.uid,
     );
-    rezervariData.addItem(rezervareNoua);
-    Navigator.of(context).pop();
+    await FirebaseFirestore.instance.collection("rezervari").add({
+      "idCamera": rezervareNoua.idCamera,
+      "dataSosire": rezervareNoua.dataSosire,
+      "dataPlecare": rezervareNoua.dataPlecare,
+      "dataInregistrareRezervare": rezervareNoua.dataInregistrareRezervare,
+      "idUtilizator": rezervareNoua.idUtilizator,
+      "stare":
+          ConvertorStareInText().transformaStareaInText(rezervareNoua.getStare)
+    }).then(
+      (value) {
+        rezervareNoua.idRezervare = value.id;
+        rezervariData.addItem(rezervareNoua);
+        rezervariUserData.addItem(rezervareNoua);
+      },
+      onError: (e) {
+        if (kDebugMode) {
+          print(e);
+        }
+      },
+    );
+    Navigator.of(context).pop(true);
   }
 
   const CameraDetail(
@@ -64,9 +93,19 @@ class CameraDetail extends StatelessWidget {
               subtitle: "Etaj",
               description: camera.etaj == 0 ? "Parter" : camera.etaj.toString(),
             ),
-            const Text(
-              "Etc.",
-              textScaleFactor: 10,
+            CameraInformationTile(
+              subtitle: "Balcon",
+              description: camera.areBalcon
+                  ? "Camera are balcon"
+                  : "Camera nu are balcon",
+            ),
+            CameraInformationTile(
+              subtitle: "Pret",
+              description: "${camera.pret} lei",
+            ),
+            CameraInformationTile(
+              subtitle: "Descriere",
+              description: camera.descriere,
             ),
             const SizedBox(
               height: 100,

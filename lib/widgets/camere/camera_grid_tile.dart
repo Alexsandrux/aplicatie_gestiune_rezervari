@@ -32,20 +32,11 @@ class _CameraGridTileState extends State<CameraGridTile> {
           widget.dataSosire,
           widget.dataPlecare
         ]).then((value) => {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: const Text("Rezervarea a fost înregistrată!"),
-                  duration: const Duration(seconds: 4),
-                  action: SnackBarAction(
-                    label: "AFISARE",
-                    onPressed: () {
-                      // TODO: sa fie trimis la rezervare detail, hint: ne folosim de pop sa trimitem id-ul
-                      Navigator.of(context)
-                          .pushReplacementNamed(MyReservationsScreen.routeName);
-                    },
-                  ),
-                ),
-              )
+              if (value == true)
+                {
+                  Navigator.of(context)
+                      .pushReplacementNamed(MyReservationsScreen.routeName)
+                }
             });
       },
       splashColor: Theme.of(context).highlightColor,

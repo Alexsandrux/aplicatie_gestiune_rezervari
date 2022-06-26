@@ -1,7 +1,12 @@
+import 'package:aplicatie_gestiune_rezervari/models/stare_rezervare/stare_anulata.dart';
+import 'package:aplicatie_gestiune_rezervari/models/stare_rezervare/stare_finalizata.dart';
+import 'package:aplicatie_gestiune_rezervari/models/stare_rezervare/stare_in_curs_de_rezervare.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/rezervare.dart';
+import '../../providers/camere_provider.dart';
 
 class RezervareListTile extends StatelessWidget {
   final Rezervare rezervare;
@@ -21,22 +26,29 @@ class RezervareListTile extends StatelessWidget {
     );
   }
 
+  Color alegereCuloareDupaStare() {
+    if (rezervare.getStare.runtimeType == StareAnulata) {
+      return Colors.red;
+    } else if (rezervare.getStare.runtimeType == StareInCursDeRezervare) {
+      return Colors.blueAccent;
+    } else if (rezervare.getStare.runtimeType == StareFinalizata) {
+      return Colors.blueGrey;
+    }
+    return Colors.greenAccent;
+  }
+
   @override
   Widget build(BuildContext context) {
+    var cameraData =
+        Provider.of<CamereProvider>(context).getCamera(rezervare.idCamera);
+    Color culoare = alegereCuloareDupaStare();
     return Container(
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(2),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-            color: const Color.fromARGB(255, 52, 135, 173), width: 1),
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color.fromARGB(128, 72, 209, 129),
-            Color.fromARGB(128, 246, 182, 13),
-          ],
+          color: culoare,
         ),
       ),
       child: Column(
@@ -52,17 +64,16 @@ class RezervareListTile extends StatelessWidget {
                 "Data plecare rezervare: ",
                 DateFormat.yMd().format(rezervare.dataPlecare).toString(),
               ),
-              rowColumnBuilder("Pret: ",
-                  "200"), // de calculat pretul cand facem request-ul catre camera cand am legatura cu baza de date
+              rowColumnBuilder(
+                  "Pret: ",
+                  cameraData.pret
+                      .toString()), // de calculat pretul cand facem request-ul catre camera cand am legatura cu baza de date
             ],
           ),
           const SizedBox(
             height: 10,
           ),
-          rowColumnBuilder(
-              "Camera:",
-              rezervare
-                  .idCamera) // TODO: de facut get la o camera anume de la provider
+          rowColumnBuilder("Camera:", cameraData.numarCamera)
         ],
       ),
     );

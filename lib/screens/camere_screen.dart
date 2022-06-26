@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/camere_provider.dart';
-
+import '../providers/rezervari_provider.dart';
 import '../widgets/drawer/main_drawer.dart';
 import '../widgets/camere/grid_camere.dart';
 import '../widgets/camere/date_panel.dart';
@@ -60,7 +59,7 @@ class _CamereScreenState extends State<CamereScreen> {
 
   @override
   void didChangeDependencies() {
-    Provider.of<CamereProvider>(context).fetchCamere();
+    Provider.of<RezervariProvider>(context).getRezervariDupaData();
     super.didChangeDependencies();
   }
 

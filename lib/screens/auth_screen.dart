@@ -1,3 +1,6 @@
+import 'package:aplicatie_gestiune_rezervari/screens/admin_panel_screen.dart';
+import 'package:aplicatie_gestiune_rezervari/screens/homepage_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
@@ -15,10 +18,12 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  // ignore: prefer_typing_uninitialized_variables
   var _auth;
   bool _isloading = false;
 
-  void _submitAuthForm(String email, String password, bool isLogin) async {
+  void _submitAuthForm(String email, String password, String nume,
+      String prenume, String telefon, bool isLogin) async {
     _auth = FirebaseAuth.instance;
 
     UserCredential authResult;
@@ -29,14 +34,48 @@ class _AuthScreenState extends State<AuthScreen> {
       if (isLogin) {
         authResult = await _auth.signInWithEmailAndPassword(
             email: email, password: password);
+        //TODO: aici sa afiseze admin screen pt admin
+        if (authResult.user != null) {
+          final user = await FirebaseFirestore.instance
+              .collection("utilizatori")
+              .doc(authResult.user?.uid)
+              .get();
+          if (user['esteAdmin'] && user['esteAdmin'] == true) {
+            Navigator.of(context)
+                .pushReplacementNamed(AdminPanelScreen.routeName);
+          } else {
+            Navigator.of(context)
+                .pushReplacementNamed(HomepageScreen.routeName);
+          }
+        }
       } else {
-        authResult = await _auth.createUserWithEmailAndPassword(
-            email: email, password: password);
+        try {
+          authResult = await _auth.createUserWithEmailAndPassword(
+              email: email, password: password);
 
-        await FirebaseFirestore.instance
-            .collection('utilizatori')
-            .doc(authResult.user?.uid)
-            .set({'telefon': "071111111"});
+          await FirebaseFirestore.instance
+              .collection('utilizatori')
+              .doc(authResult.user?.uid)
+              .set({
+            'telefon': telefon,
+            "esteAdmin": false,
+            "email": authResult.user?.email,
+            "nume": nume,
+            "prenume": prenume,
+          });
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content:
+                  Text("Contul cu adresa $email a fost creat cu succes!!")));
+        } on FirebaseAuthException catch (signUpError) {
+          if (signUpError.code == 'email-already-in-use') {
+            setState(() {
+              _isloading = false;
+            });
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+                    "Contul cu adresa $email este folosită deja!! Vă rugăm alegeți o altă adresă de e-mail!!")));
+          }
+        }
       }
       setState(() {
         _isloading = false;
@@ -55,7 +94,9 @@ class _AuthScreenState extends State<AuthScreen> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(message!)));
     } catch (err) {
-      print(err.toString());
+      if (kDebugMode) {
+        print(err.toString());
+      }
     }
   }
 

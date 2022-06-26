@@ -1,3 +1,4 @@
+import 'package:aplicatie_gestiune_rezervari/providers/rezervari_user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +12,6 @@ import 'screens/camere_screen.dart';
 import 'screens/roads_and_location.dart';
 import 'screens/camera_screen.dart';
 import 'screens/my_reservations_screen.dart';
-// ignore: unused_import
 import 'screens/admin_panel_screen.dart';
 import 'screens/auth_screen.dart';
 
@@ -40,6 +40,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: ((context) => CamereProvider()),
         ),
+        ChangeNotifierProvider(
+          create: ((context) => RezervariUserProvider()),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -49,15 +52,9 @@ class MyApp extends StatelessWidget {
             primaryColorDark: Colors.purple[300],
             highlightColor: Colors.purple[600]),
         title: "Aplicatie Rezervari Pensiune",
-        // ignore: dead_code
-        home: StreamBuilder<User?>(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, AsyncSnapshot<User?> snapshot) {
-              if (snapshot.hasData) {
-                return const HomepageScreen();
-              }
-              return const AuthScreen(); // TODO: dupa inregistrare nu se schimba imaginea
-            }),
+        home: FirebaseAuth.instance.currentUser == null
+            ? const AuthScreen()
+            : const HomepageScreen(),
         routes: {
           "/home": (ctx) => const HomepageScreen(),
           CamereScreen.routeName: (ctx) => const CamereScreen(),
@@ -67,6 +64,7 @@ class MyApp extends StatelessWidget {
           CameraScreen.routeName: (ctx) => const CameraScreen(),
           MyReservationsScreen.routeName: (ctx) => const MyReservationsScreen(),
           AuthScreen.routeName: (ctx) => const AuthScreen(),
+          AdminPanelScreen.routeName: (ctx) => const AdminPanelScreen(),
         },
       ),
     );
