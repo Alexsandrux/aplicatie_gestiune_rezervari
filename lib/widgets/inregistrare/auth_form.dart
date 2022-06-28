@@ -45,7 +45,6 @@ class _AuthFormState extends State<AuthForm> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  //TODO: de adaugat mai multe campuri la inregistrare
                   TextFormField(
                     key: const ValueKey('email'),
                     onSaved: (value) {
@@ -69,8 +68,8 @@ class _AuthFormState extends State<AuthForm> {
                     decoration: const InputDecoration(labelText: 'Parola'),
                     obscureText: true,
                     validator: (value) {
-                      if (value!.isEmpty || value.length < 5) {
-                        return 'Parola trebuie să aibă o lungime de cel puțin 4 litere';
+                      if (value!.isEmpty || value.length < 7) {
+                        return 'Parola trebuie să aibă o lungime de cel puțin 7 litere';
                       }
                       return null;
                     },
@@ -103,7 +102,7 @@ class _AuthFormState extends State<AuthForm> {
                       keyboardType: TextInputType.phone,
                       validator: (value) {
                         if (value!.isEmpty || value.length != 10) {
-                          return 'Numărul de telefon trebuie să conțină 10 caractere. e.g. "0712345678"';
+                          return 'Numărul de telefon trebuie să conțină 10 caractere.';
                         }
                         return null;
                       },

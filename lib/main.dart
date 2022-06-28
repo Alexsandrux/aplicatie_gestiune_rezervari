@@ -1,9 +1,10 @@
 import 'package:aplicatie_gestiune_rezervari/providers/rezervari_user_provider.dart';
+import 'package:aplicatie_gestiune_rezervari/providers/stiri_provider.dart';
+import 'package:aplicatie_gestiune_rezervari/screens/add_stire_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import 'screens/homepage_screen.dart';
 import 'screens/settings_screen.dart';
@@ -35,6 +36,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
+          create: ((context) => StiriProvider()),
+        ),
+        ChangeNotifierProvider(
           create: ((context) => RezervariProvider()),
         ),
         ChangeNotifierProvider(
@@ -52,9 +56,7 @@ class MyApp extends StatelessWidget {
             primaryColorDark: Colors.purple[300],
             highlightColor: Colors.purple[600]),
         title: "Aplicatie Rezervari Pensiune",
-        home: FirebaseAuth.instance.currentUser == null
-            ? const AuthScreen()
-            : const HomepageScreen(),
+        home: const AuthScreen(),
         routes: {
           "/home": (ctx) => const HomepageScreen(),
           CamereScreen.routeName: (ctx) => const CamereScreen(),
@@ -65,6 +67,7 @@ class MyApp extends StatelessWidget {
           MyReservationsScreen.routeName: (ctx) => const MyReservationsScreen(),
           AuthScreen.routeName: (ctx) => const AuthScreen(),
           AdminPanelScreen.routeName: (ctx) => const AdminPanelScreen(),
+          AddStireScreen.routeName: (ctx) => const AddStireScreen(),
         },
       ),
     );

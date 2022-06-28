@@ -20,8 +20,6 @@ class DrawerButtonTile extends StatelessWidget {
         Navigator.of(context).pushReplacementNamed(screenRoute);
       },
       child: Card(
-        // elevation: 15,
-        // shadowColor: Colors.blue,
         shape: RoundedRectangleBorder(
           side: BorderSide(
             color: Colors.blue.shade900,

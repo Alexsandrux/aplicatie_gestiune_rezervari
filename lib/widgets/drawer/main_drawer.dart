@@ -1,3 +1,4 @@
+import 'package:aplicatie_gestiune_rezervari/screens/homepage_screen.dart';
 import 'package:flutter/material.dart';
 import './drawer_button_tile.dart';
 
@@ -25,7 +26,7 @@ class _MainDrawerState extends State<MainDrawer> {
           const DrawerButtonTile(
             titlu: "Acasă",
             icon: Icon(Icons.home),
-            screenRoute: "/",
+            screenRoute: HomepageScreen.routeName,
           ),
           const DrawerButtonTile(
             titlu: "Rezervă cameră",

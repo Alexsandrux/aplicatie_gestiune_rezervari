@@ -34,7 +34,6 @@ class _AuthScreenState extends State<AuthScreen> {
       if (isLogin) {
         authResult = await _auth.signInWithEmailAndPassword(
             email: email, password: password);
-        //TODO: aici sa afiseze admin screen pt admin
         if (authResult.user != null) {
           final user = await FirebaseFirestore.instance
               .collection("utilizatori")

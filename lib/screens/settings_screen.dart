@@ -3,10 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../widgets/drawer/main_drawer.dart';
 
-import '../screens/auth_screen.dart';
-
-import 'package:firebase_auth/firebase_auth.dart';
-
 class SettingsScreen extends StatelessWidget {
   static const String routeName = "/settings";
 

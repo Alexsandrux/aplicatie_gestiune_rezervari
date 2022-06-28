@@ -1,3 +1,4 @@
+import 'package:aplicatie_gestiune_rezervari/screens/add_stire_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../models/autentificare/sign_out_manager.dart';
@@ -25,9 +26,11 @@ class AdminPanelScreen extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const ElevatedButton(
-                    onPressed: null,
-                    child: Text("Adaugă o știre"),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(AddStireScreen.routeName);
+                    },
+                    child: const Text("Adaugă o știre"),
                   ),
                   const ElevatedButton(
                     onPressed: null,

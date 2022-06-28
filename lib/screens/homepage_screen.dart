@@ -2,6 +2,7 @@ import 'package:aplicatie_gestiune_rezervari/providers/rezervari_user_provider.d
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/camere_provider.dart';
+import '../providers/stiri_provider.dart';
 import '../widgets/drawer/main_drawer.dart';
 
 class HomepageScreen extends StatefulWidget {
@@ -18,6 +19,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
   void didChangeDependencies() {
     Provider.of<CamereProvider>(context).fetchCamere();
     Provider.of<RezervariUserProvider>(context).getRezervariUser();
+    Provider.of<StiriProvider>(context, listen: false).fetchStiri();
     super.didChangeDependencies();
   }
 
