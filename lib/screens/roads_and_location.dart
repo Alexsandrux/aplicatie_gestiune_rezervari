@@ -1,20 +1,24 @@
+import 'package:aplicatie_gestiune_rezervari/providers/medie_recenzie_provider.dart';
 import 'package:flutter/material.dart';
-import '../widgets/drawer/main_drawer.dart';
+import 'package:provider/provider.dart';
 
-class RoadsAndLocation extends StatelessWidget {
+import '../widgets/recenzii/recenzii_si_locatie.dart';
+
+class RoadsAndLocation extends StatefulWidget {
   static const String routeName = "/roads_and_location";
 
   const RoadsAndLocation({Key? key}) : super(key: key);
 
   @override
+  State<RoadsAndLocation> createState() => _RoadsAndLocationState();
+}
+
+class _RoadsAndLocationState extends State<RoadsAndLocation> {
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const MainDrawer(),
-      body: const Center(child: Text("Stare drumuri și locație")),
-      appBar: AppBar(
-        title: const Text("Stare drumuri și locație"),
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
-    );
+    var medieRecenzieData = Provider.of<MedieRecenzieProvider>(context);
+    medieRecenzieData.calculareMedie();
+    double medie = medieRecenzieData.getMedie();
+    return RecenzieSiLocatie(medie: medie);
   }
 }

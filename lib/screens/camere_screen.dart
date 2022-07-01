@@ -21,7 +21,6 @@ class _CamereScreenState extends State<CamereScreen> {
   DateTime? dataPlecare;
 
   void _dataSosirePicker() {
-    // TODO: de adaugat validare la date !!!!!!!!!!!!!!
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -33,9 +32,20 @@ class _CamereScreenState extends State<CamereScreen> {
       if (pickedDate == null) {
         return;
       }
-      setState(() {
-        dataSosire = pickedDate;
-      });
+      if (dataPlecare == null) {
+        setState(() {
+          dataSosire = pickedDate;
+        });
+        return;
+      }
+      if (pickedDate.isBefore(dataPlecare!)) {
+        setState(() {
+          dataSosire = pickedDate;
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Data sosirii nu poate fi după data plecări!!!")));
+      }
     });
   }
 
@@ -51,9 +61,20 @@ class _CamereScreenState extends State<CamereScreen> {
       if (pickedDate == null) {
         return;
       }
-      setState(() {
-        dataPlecare = pickedDate;
-      });
+      if (dataSosire == null) {
+        setState(() {
+          dataPlecare = pickedDate;
+        });
+        return;
+      }
+      if (pickedDate.isAfter(dataSosire!)) {
+        setState(() {
+          dataPlecare = pickedDate;
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Data sosirii nu poate fi după data plecări!!!")));
+      }
     });
   }
 
@@ -93,7 +114,8 @@ class _CamereScreenState extends State<CamereScreen> {
             child: SizedBox(
               width: double.infinity,
               height: (MediaQuery.of(context).size.height) * 0.35,
-              child: (dataSosire != null && dataPlecare != null)
+              // ignore: unnecessary_null_comparison
+              child: (dataPlecare != null && dataSosire != null)
                   ? GridCamere(
                       dataSosire: dataSosire!,
                       dataPlecare: dataPlecare!,

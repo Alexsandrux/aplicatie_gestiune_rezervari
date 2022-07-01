@@ -114,23 +114,6 @@ class CameraDetail extends StatelessWidget {
               child: ElevatedButton(
                 child: const Text("Rezervă"),
                 onPressed: () {
-                  //TODO: de finalizat alertDialog
-                  /*showDialog(
-                    context: context,
-                    builder: (ctx) => AlertDialog(
-                      title: const Text("Doriți să finalizați rezervarea?"),
-                      content: Column(
-                        children: const [
-                          Text(
-                              "Sunteți sigur ca vreți să sa rezervați camera?"),
-                          Text(
-                              "Vor exista cheltuieli ulterioare legate de plata avansului!"),
-                        ],
-                      ),
-                    ), // de verificat daca este sigur ca utilizatorul este sigur ca vrea sa faca rezervare si sa fie atentionat in legatura cu plata ulterioara a avansului
-                  ).then(
-                    ((value) => addRezervare(context)),
-                  ); */
                   addRezervare(context);
                 },
                 style: ButtonStyle(

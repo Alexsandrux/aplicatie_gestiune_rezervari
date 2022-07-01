@@ -1,4 +1,6 @@
 import 'package:aplicatie_gestiune_rezervari/models/stare_rezervare/convert_text_stare.dart';
+import 'package:aplicatie_gestiune_rezervari/models/stare_rezervare/stare_anulata.dart';
+import 'package:aplicatie_gestiune_rezervari/models/stare_rezervare/stare_rezervata.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,28 @@ class RezervariUserProvider with ChangeNotifier {
     _items.add(rezervare);
 
     notifyListeners();
+  }
+
+  void anulareRezervare(Rezervare rezervare, BuildContext context) async {
+    notifyListeners();
+
+    await FirebaseFirestore.instance
+        .collection("rezervari")
+        .doc(rezervare.idRezervare)
+        .update({"stare": StareAnulata().runtimeType.toString()});
+
+    rezervare.anulareRezervare();
+  }
+
+  void platesteAvansRezervare(Rezervare rezervare, BuildContext context) async {
+    notifyListeners();
+
+    await FirebaseFirestore.instance
+        .collection("rezervari")
+        .doc(rezervare.idRezervare)
+        .update({"stare": StareRezervata().runtimeType.toString()});
+
+    rezervare.finalizareRezervare();
   }
 
   Future<void> getRezervariUser() async {

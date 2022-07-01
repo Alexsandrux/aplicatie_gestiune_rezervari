@@ -1,6 +1,9 @@
 import 'package:aplicatie_gestiune_rezervari/models/stare_rezervare/stare_anulata.dart';
 import 'package:aplicatie_gestiune_rezervari/models/stare_rezervare/stare_finalizata.dart';
 import 'package:aplicatie_gestiune_rezervari/models/stare_rezervare/stare_in_curs_de_rezervare.dart';
+import 'package:aplicatie_gestiune_rezervari/models/stare_rezervare/stare_rezervata.dart';
+import 'package:aplicatie_gestiune_rezervari/providers/rezervari_user_provider.dart';
+import 'package:aplicatie_gestiune_rezervari/screens/homepage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -11,8 +14,10 @@ import '../../providers/camere_provider.dart';
 class RezervareListTile extends StatefulWidget {
   final Rezervare rezervare;
 
-  const RezervareListTile({required this.rezervare, Key? key})
-      : super(key: key);
+  final VoidCallback functie;
+
+  // ignore: use_key_in_widget_constructors
+  const RezervareListTile({required this.functie, required this.rezervare});
 
   @override
   State<RezervareListTile> createState() => _RezervareListTileState();
@@ -52,29 +57,55 @@ class _RezervareListTileState extends State<RezervareListTile> {
     y = details.globalPosition.dy;
   }
 
+  void anulareRezervare() {
+    Provider.of<RezervariUserProvider>(context, listen: false)
+        .anulareRezervare(widget.rezervare, context);
+
+    widget.functie();
+
+    Navigator.of(context).pushReplacementNamed(HomepageScreen.routeName);
+  }
+
+  void platesteAvans() {
+    Provider.of<RezervariUserProvider>(context, listen: false)
+        .platesteAvansRezervare(widget.rezervare, context);
+
+    widget.functie();
+
+    Navigator.of(context).pushReplacementNamed(HomepageScreen.routeName);
+  }
+
   @override
   Widget build(BuildContext context) {
     var cameraData = Provider.of<CamereProvider>(context)
         .getCamera(widget.rezervare.idCamera);
     Color culoare = alegereCuloareDupaStare();
-    return InkWell(
+    return GestureDetector(
       onTapDown: (details) => _onTapDown(details),
       onTap: () => showMenu(
         context: context,
         position: RelativeRect.fromLTRB(x, y, 1, 1),
         items: [
-          const PopupMenuItem(
+          PopupMenuItem(
             value: 1,
             child: TextButton(
-              onPressed: null,
-              child: Text("Anulează"),
+              onPressed: widget.rezervare.getStare.runtimeType ==
+                          StareInCursDeRezervare().runtimeType ||
+                      widget.rezervare.getStare.runtimeType ==
+                          StareRezervata().runtimeType
+                  ? anulareRezervare
+                  : null,
+              child: const Text("Anulează"),
             ),
           ),
-          const PopupMenuItem(
+          PopupMenuItem(
             value: 2,
             child: TextButton(
-              onPressed: null,
-              child: Text("Platăște avans"),
+              onPressed: widget.rezervare.getStare.runtimeType ==
+                      StareInCursDeRezervare().runtimeType
+                  ? platesteAvans
+                  : null,
+              child: const Text("Platăște avans"),
             ),
           ),
         ],

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/camere_provider.dart';
 import '../providers/stiri_provider.dart';
-import '../widgets/drawer/main_drawer.dart';
+import '../widgets/acasa/continut_pagina_acasa.dart';
 
 class HomepageScreen extends StatefulWidget {
   const HomepageScreen({Key? key}) : super(key: key);
@@ -25,14 +25,6 @@ class _HomepageScreenState extends State<HomepageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const MainDrawer(),
-      body: const Center(
-        child: Text("Bine ati venit!"),
-      ),
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
-    );
+    return const ContinutPaginaAcasa();
   }
 }

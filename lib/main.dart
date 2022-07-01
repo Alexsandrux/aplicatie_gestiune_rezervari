@@ -1,3 +1,4 @@
+import 'package:aplicatie_gestiune_rezervari/providers/medie_recenzie_provider.dart';
 import 'package:aplicatie_gestiune_rezervari/providers/rezervari_user_provider.dart';
 import 'package:aplicatie_gestiune_rezervari/providers/stiri_provider.dart';
 import 'package:aplicatie_gestiune_rezervari/screens/add_stire_screen.dart';
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
+          create: ((context) => MedieRecenzieProvider()),
+        ),
+        ChangeNotifierProvider(
           create: ((context) => StiriProvider()),
         ),
         ChangeNotifierProvider(
@@ -68,6 +72,8 @@ class MyApp extends StatelessWidget {
           AuthScreen.routeName: (ctx) => const AuthScreen(),
           AdminPanelScreen.routeName: (ctx) => const AdminPanelScreen(),
           AddStireScreen.routeName: (ctx) => const AddStireScreen(),
+          // AdminRezervari.routeName: (ctx) => const AdminRezervari(),
+          // AdminAlegeRezervari.routeName: (ctx) => const AdminAlegeRezervari(),
         },
       ),
     );
