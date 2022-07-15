@@ -1,5 +1,6 @@
 import 'package:aplicatie_gestiune_rezervari/models/rezervare.dart';
 import 'package:aplicatie_gestiune_rezervari/models/stare_rezervare/convert_text_stare.dart';
+import 'package:aplicatie_gestiune_rezervari/models/stare_rezervare/stare_in_curs_de_rezervare.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -82,8 +83,18 @@ class RezervareAdminTile extends StatelessWidget {
                 ConvertorTextInStare()
                     .transformaTextInStare(rezervare, stareRezervare);
                 rezervare.idRezervare = idRezervare;
-                Provider.of<RezervariUserProvider>(context, listen: false)
-                    .platesteAvansRezervare(rezervare, context);
+                if (rezervare.getStare.runtimeType.toString() ==
+                    StareInCursDeRezervare().runtimeType.toString()) {
+                  Provider.of<RezervariUserProvider>(context, listen: false)
+                      .platesteAvansRezervare(rezervare, context);
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content:
+                          Text("Rezervarea a fost actualizată cu succes!")));
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text(
+                          "A avut loc o eroare! Rezervarea nu se află în starea: \"ÎN CURS DE REZERVARE\"")));
+                }
                 Navigator.of(context).pop();
               },
             ),
