@@ -48,4 +48,23 @@ class RezervariProvider with ChangeNotifier {
       }
     });
   }
+
+  Future<void> fetchRezervariAdmin() async {
+    _items.clear();
+    await FirebaseFirestore.instance.collection('rezervari').get().then((data) {
+      for (var item in data.docs) {
+        Rezervare rezervare = Rezervare(
+          idCamera: item["idCamera"],
+          dataSosire: (item["dataSosire"] as Timestamp).toDate(),
+          dataPlecare: (item["dataPlecare"] as Timestamp).toDate(),
+          dataInregistrareRezervare:
+              (item["dataInregistrareRezervare"] as Timestamp).toDate(),
+          idUtilizator: item["idUtilizator"],
+        );
+        rezervare.idRezervare = item.id;
+        ConvertorTextInStare().transformaTextInStare(rezervare, item['stare']);
+        _items.add(rezervare);
+      }
+    });
+  }
 }

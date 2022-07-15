@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_string_escapes
+
 import 'package:aplicatie_gestiune_rezervari/models/stare_rezervare/stare_anulata.dart';
 import 'package:aplicatie_gestiune_rezervari/models/stare_rezervare/stare_finalizata.dart';
 import 'package:aplicatie_gestiune_rezervari/models/stare_rezervare/stare_in_curs_de_rezervare.dart';
@@ -66,7 +68,42 @@ class _RezervareListTileState extends State<RezervareListTile> {
     Navigator.of(context).pushReplacementNamed(HomepageScreen.routeName);
   }
 
-  void platesteAvans() {
+  void platesteAvans() async {
+    //TODO: de finalizat partea cu plata
+//     final MadPay pay = MadPay();
+
+// // To find out if payment is available on this device
+//     var result = await pay.checkPayments();
+
+// // If you need to check if user has at least one active card
+//     await pay.checkActiveCard(
+//       paymentNetworks: <PaymentNetwork>[
+//         PaymentNetwork.visa,
+//         PaymentNetwork.mastercard,
+//       ],
+//     );
+
+// // To pay with Apple Pay or Google Pay
+//     await pay.processingPayment(PaymentRequest(
+//       google: GoogleParameters(
+//         gatewayName: 'Your Gateway',
+//         gatewayMerchantId: 'Your id',
+//         merchantId: 'example_id',
+//       ),
+//       apple: AppleParameters(
+//         merchantIdentifier: 'Your id',
+//       ),
+//       currencyCode: 'RON',
+//       countryCode: 'RO',
+//       paymentItems: <PaymentItem>[
+//         PaymentItem(name: 'Camera', price: pret),
+//       ],
+//       paymentNetworks: <PaymentNetwork>[
+//         PaymentNetwork.visa,
+//         PaymentNetwork.mastercard,
+//       ],
+//     ));
+
     Provider.of<RezervariUserProvider>(context, listen: false)
         .platesteAvansRezervare(widget.rezervare, context);
 
@@ -75,10 +112,13 @@ class _RezervareListTileState extends State<RezervareListTile> {
     Navigator.of(context).pushReplacementNamed(HomepageScreen.routeName);
   }
 
+  late double pret;
+
   @override
   Widget build(BuildContext context) {
     var cameraData = Provider.of<CamereProvider>(context)
         .getCamera(widget.rezervare.idCamera);
+    pret = cameraData.pret;
     Color culoare = alegereCuloareDupaStare();
     return GestureDetector(
       onTapDown: (details) => _onTapDown(details),

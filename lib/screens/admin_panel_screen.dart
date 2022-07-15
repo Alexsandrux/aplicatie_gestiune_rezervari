@@ -1,4 +1,5 @@
 import 'package:aplicatie_gestiune_rezervari/screens/add_stire_screen.dart';
+import 'package:aplicatie_gestiune_rezervari/screens/admin_rezervari.dart';
 import 'package:flutter/material.dart';
 
 import '../models/autentificare/sign_out_manager.dart';
@@ -7,6 +8,10 @@ class AdminPanelScreen extends StatelessWidget {
   const AdminPanelScreen({Key? key}) : super(key: key);
 
   static const String routeName = "/adminPanel";
+
+  void veziRezervarile(BuildContext context) async {
+    Navigator.of(context).pushNamed(AdminRezervari.routeName);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +37,11 @@ class AdminPanelScreen extends StatelessWidget {
                     },
                     child: const Text("Adaugă o știre"),
                   ),
-                  const ElevatedButton(
-                    onPressed: null,
-                    child: Text("Vezi rezervările"),
+                  ElevatedButton(
+                    onPressed: () {
+                      veziRezervarile(context);
+                    },
+                    child: const Text("Vezi rezervările"),
                   ),
                   ElevatedButton(
                     onPressed: () {

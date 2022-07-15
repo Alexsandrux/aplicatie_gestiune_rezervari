@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'screens/admin_rezervari.dart';
 import 'screens/homepage_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/news_screen.dart';
@@ -72,7 +73,7 @@ class MyApp extends StatelessWidget {
           AuthScreen.routeName: (ctx) => const AuthScreen(),
           AdminPanelScreen.routeName: (ctx) => const AdminPanelScreen(),
           AddStireScreen.routeName: (ctx) => const AddStireScreen(),
-          // AdminRezervari.routeName: (ctx) => const AdminRezervari(),
+          AdminRezervari.routeName: (ctx) => const AdminRezervari(),
           // AdminAlegeRezervari.routeName: (ctx) => const AdminAlegeRezervari(),
         },
       ),

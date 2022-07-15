@@ -162,6 +162,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.2"
+  fixnum:
+    dependency: transitive
+    description:
+      name: fixnum
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -280,6 +287,34 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  mad_pay:
+    dependency: "direct main"
+    description:
+      name: mad_pay
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.12"
+  mad_pay_android:
+    dependency: transitive
+    description:
+      name: mad_pay_android
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.12"
+  mad_pay_ios:
+    dependency: transitive
+    description:
+      name: mad_pay_ios
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.12"
+  mad_pay_platform_interface:
+    dependency: transitive
+    description:
+      name: mad_pay_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.12"
   matcher:
     dependency: transitive
     description:
@@ -350,34 +385,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  pay:
-    dependency: "direct main"
-    description:
-      name: pay
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.10"
-  pay_android:
-    dependency: transitive
-    description:
-      name: pay_android
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.7"
-  pay_ios:
-    dependency: transitive
-    description:
-      name: pay_ios
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.7"
-  pay_platform_interface:
-    dependency: transitive
-    description:
-      name: pay_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.2"
   petitparser:
     dependency: transitive
     description:
@@ -406,6 +413,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.4"
+  protobuf:
+    dependency: transitive
+    description:
+      name: protobuf
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   provider:
     dependency: "direct main"
     description:
@@ -551,13 +565,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.1.0"
-  yaml:
-    dependency: transitive
-    description:
-      name: yaml
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.1.1"
 sdks:
   dart: ">=2.17.0 <3.0.0"
   flutter: ">=3.0.0"
