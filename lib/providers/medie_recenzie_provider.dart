@@ -30,6 +30,8 @@ class MedieRecenzieProvider with ChangeNotifier {
         count++;
       });
     }).then((value) => medie = sum / count);
+
+    notifyListeners();
   }
 
   double getMedie() {

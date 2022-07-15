@@ -1,15 +1,29 @@
 import 'package:aplicatie_gestiune_rezervari/widgets/recenzii/recenzie.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../providers/medie_recenzie_provider.dart';
 import '../drawer/main_drawer.dart';
 
-class RecenzieSiLocatie extends StatelessWidget {
+class RecenzieSiLocatie extends StatefulWidget {
   const RecenzieSiLocatie({
     Key? key,
-    required this.medie,
   }) : super(key: key);
 
-  final double medie;
+  @override
+  State<RecenzieSiLocatie> createState() => _RecenzieSiLocatieState();
+}
+
+class _RecenzieSiLocatieState extends State<RecenzieSiLocatie> {
+  double medieBuna = 0;
+
+  @override
+  void didChangeDependencies() {
+    var medieRecenzieData =
+        Provider.of<MedieRecenzieProvider>(context, listen: true);
+    medieBuna = medieRecenzieData.getMedie();
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +43,7 @@ class RecenzieSiLocatie extends StatelessWidget {
           ),
           Center(
             child: Text(
-              "Medie: ${double.parse(medie.toString()).toStringAsFixed(2)}",
+              "Medie: ${double.parse(medieBuna.toString()).toStringAsFixed(2)}",
               textScaleFactor: 1.5,
             ),
           ),

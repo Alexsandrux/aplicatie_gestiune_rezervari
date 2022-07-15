@@ -1,3 +1,4 @@
+import 'package:aplicatie_gestiune_rezervari/screens/homepage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -23,6 +24,7 @@ class Recenzie extends StatelessWidget {
       ),
       onRatingUpdate: (rating) {
         ManagerAddRecenzie().addRecenzie(rating, context);
+        Navigator.of(context).pushReplacementNamed(HomepageScreen.routeName);
       },
     );
   }

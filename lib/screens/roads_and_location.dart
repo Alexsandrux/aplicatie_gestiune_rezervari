@@ -4,21 +4,16 @@ import 'package:provider/provider.dart';
 
 import '../widgets/recenzii/recenzii_si_locatie.dart';
 
-class RoadsAndLocation extends StatefulWidget {
+class RoadsAndLocation extends StatelessWidget {
   static const String routeName = "/roads_and_location";
 
   const RoadsAndLocation({Key? key}) : super(key: key);
 
   @override
-  State<RoadsAndLocation> createState() => _RoadsAndLocationState();
-}
-
-class _RoadsAndLocationState extends State<RoadsAndLocation> {
-  @override
   Widget build(BuildContext context) {
-    var medieRecenzieData = Provider.of<MedieRecenzieProvider>(context);
+    var medieRecenzieData =
+        Provider.of<MedieRecenzieProvider>(context, listen: false);
     medieRecenzieData.calculareMedie();
-    double medie = medieRecenzieData.getMedie();
-    return RecenzieSiLocatie(medie: medie);
+    return const RecenzieSiLocatie();
   }
 }
