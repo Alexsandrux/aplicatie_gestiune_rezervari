@@ -32,24 +32,28 @@ class _AdminRezervariState extends State<AdminRezervari> {
           future: getDocument(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return ListView.builder(
-                  itemCount: snapshot.data!.docs.length,
-                  itemBuilder: ((context, index) => RezervareAdminTile(
-                        stareRezervare: snapshot.data!.docs[index]['stare'],
-                        dataSosire: (snapshot.data!.docs[index]["dataSosire"]
-                                as Timestamp)
-                            .toDate(),
-                        dataPlecare: (snapshot.data!.docs[index]["dataPlecare"]
-                                as Timestamp)
-                            .toDate(),
-                        dataInregistrare: (snapshot.data!.docs[index]
-                                ["dataInregistrareRezervare"] as Timestamp)
-                            .toDate(),
-                        idCamera: snapshot.data!.docs[index]["idCamera"],
-                        idUtilizator: snapshot.data!.docs[index]
-                            ["idUtilizator"],
-                        idRezervare: (snapshot.data!.docs[index].id),
-                      )));
+              return snapshot.data!.docs.isEmpty
+                  ? const Center(
+                      child: Text("Nu există rezervări viitoare"),
+                    )
+                  : ListView.builder(
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: ((context, index) => RezervareAdminTile(
+                            stareRezervare: snapshot.data!.docs[index]['stare'],
+                            dataSosire: (snapshot.data!.docs[index]
+                                    ["dataSosire"] as Timestamp)
+                                .toDate(),
+                            dataPlecare: (snapshot.data!.docs[index]
+                                    ["dataPlecare"] as Timestamp)
+                                .toDate(),
+                            dataInregistrare: (snapshot.data!.docs[index]
+                                    ["dataInregistrareRezervare"] as Timestamp)
+                                .toDate(),
+                            idCamera: snapshot.data!.docs[index]["idCamera"],
+                            idUtilizator: snapshot.data!.docs[index]
+                                ["idUtilizator"],
+                            idRezervare: (snapshot.data!.docs[index].id),
+                          )));
             } else if (snapshot.connectionState == ConnectionState.none) {
               return const Text("No data");
             }
