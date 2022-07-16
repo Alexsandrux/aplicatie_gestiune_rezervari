@@ -20,11 +20,15 @@ class _MyWidgetState extends State<StiriList> {
   Widget build(BuildContext context) {
     var stiriData = Provider.of<StiriProvider>(context, listen: false);
     stiri = stiriData.getItems;
-    return ListView.builder(
-        itemCount: stiri.length,
-        itemBuilder: (ctx, index) {
-          return StireItem(
-              url: stiri[index].url, descriere: stiri[index].descriere);
-        });
+    return stiri.isEmpty
+        ? const Center(
+            child: Text("Nu există știri încă în aplicație"),
+          )
+        : ListView.builder(
+            itemCount: stiri.length,
+            itemBuilder: (ctx, index) {
+              return StireItem(
+                  url: stiri[index].url, descriere: stiri[index].descriere);
+            });
   }
 }

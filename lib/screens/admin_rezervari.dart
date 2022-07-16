@@ -15,7 +15,7 @@ class _AdminRezervariState extends State<AdminRezervari> {
   Future<QuerySnapshot> getDocument() async {
     return FirebaseFirestore.instance
         .collection("rezervari")
-        .orderBy("dataSosire", descending: true)
+        .orderBy("dataSosire", descending: false)
         .where("dataSosire",
             isGreaterThanOrEqualTo:
                 DateTime.now().subtract(const Duration(days: 1)))
