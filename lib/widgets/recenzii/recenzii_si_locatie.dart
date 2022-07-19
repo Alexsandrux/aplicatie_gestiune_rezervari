@@ -57,7 +57,12 @@ class _RecenzieSiLocatieState extends State<RecenzieSiLocatie> {
           ),
           const Center(
             child: Text(
-              "Strada lalelelor nr. 22",
+              "Muntele Alb, Romani, Jud. Vâlcea,",
+            ),
+          ),
+          Center(
+            child: Image.asset(
+              "lib/assets/pictures/locatie_gmaps.png",
             ),
           ),
           const Spacer(),

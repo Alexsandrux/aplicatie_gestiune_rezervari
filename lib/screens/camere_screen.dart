@@ -113,7 +113,7 @@ class _CamereScreenState extends State<CamereScreen> {
           SingleChildScrollView(
             child: SizedBox(
               width: double.infinity,
-              height: (MediaQuery.of(context).size.height) * 0.35,
+              height: (MediaQuery.of(context).size.height) * 0.7,
               // ignore: unnecessary_null_comparison
               child: (dataPlecare != null && dataSosire != null)
                   ? GridCamere(
